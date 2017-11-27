@@ -24,7 +24,13 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" >Author</label>
                         <div class="col-sm-10">
-                            <textarea name="author" id="author" class="form-control"></textarea>
+                            <input type="text" name="author" id="author" class="form-control"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" >Description</label>
+                        <div class="col-sm-10">
+                            <textarea  name="description" id="description" class="form-control" rows="10"></textarea>
                         </div>
                     </div>
                     <div class="form-group">

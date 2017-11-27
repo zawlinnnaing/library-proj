@@ -1,96 +1,100 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+  
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <!-- Styles -->
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Lobster');
+    body {
+        background-color: #fff;
+        color: #636b6f;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 100;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+    }
+    .welcome {
+        background: linear-gradient( rgba(0, 0, 0, .5),
+        rgba(0, 0, 0, .5)),
+        url('{{ asset('library-image.jpg') }}');
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        background-size: cover;
+        min-width: 100%;
+    }
+    .welcome-msg{
+        color: white !important;
+        font-family: 'Lobster', cursive;
+        font-size: 4em !important;
+        text-align: center;
+    }
+    .hero-body{
+        margin-top: 0%;
+    }
+    .logo{
+        margin: 0 auto !important;
+        display: block;
+        height: auto;
+    }
+    .welcome-quote{
+        text-align: center;
+        color: white !important;
+        font-weight: bold !important;
+        margin: 10% 0 !important;
+        font-size: 1.5em !important;
+    }
+    .explore-btn{
+        font-size: 3em;
+        color: white;
+        text-align: center;
+        display: block;
+    }
+    .explore-msg{
+        text-align: center;
+        color: white;
+    }
+    .explore-part{
+        position: absolute;
+        bottom: 5%;
+        display: block;
+        left: 0;
+        right: 0;
+        margin: 0 auto;        
+    }
+    #explore-icon{
+        color: white !important;
+    }
+    </style>
+    <div class="welcome">
+        <div class="hero library-msg">
+            <div class="hero-body">
+                <img src="{{ asset('MTU.png') }}" class="logo">
+                <h1 class="title welcome-msg">MTU Library</h1>
+                <h1 class="subtitle welcome-quote is-hidden-mobile">“I have always imagined that Paradise will be a kind of library.”<br>
+                    ― Jorge Luis Borges
+</h1>          <div class="explore-part is-mobile">
+                <p class="explore-msg">Explore our libray</p>
+                <div class="explore-btn">
+                    <a href="#nav-panel" id="explore-icon"><i class="fa fa-angle-double-down" aria-hidden="true"></i></a>
                 </div>
             </div>
+            </div>
         </div>
+    </div>
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js">
+    </script>
 
-    </body>
-</html>
+        <script type="text/javascript">
+        $('#explore-icon').click(function (e) {
+            e.preventDefault();
+            $('body').css('overflow','scroll');
+            // body...
+            $('html,body').animate({
+                scrollTop: $($(this).attr('href')).offset().top
+            },500,function(){
+                $('.welcome').hide();
+            });
+            return false;
+        });
+            </script>

@@ -1,0 +1,1 @@
+<title>{{ $slot or 'MTU Library'}}</title>

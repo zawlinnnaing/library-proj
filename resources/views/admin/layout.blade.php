@@ -33,7 +33,7 @@
     <nav id="menu" class="menu">
         <section class="menu-section">
             <ul class="menu-section-list">
-                <li><a href="/home">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="{{ route('admin.change_password_form') }}">Change password(Admin)</a></li>
             </ul>
         </section>
@@ -53,7 +53,7 @@
             <div class="navbar-menu">
                 <!-- navbar-start, navbar-end... -->
                 <div class="navbar-start">
-                    <a class="navbar-item" href="/home">
+                    <a class="navbar-item" href="/">
                     Home
                 </a>
                     <a class="navbar-item" href="{{ route('admin.change_password_form') }}">Change password (Admin)</a>

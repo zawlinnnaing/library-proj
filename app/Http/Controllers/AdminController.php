@@ -11,6 +11,7 @@ use App\Category;
 
 use App\Reservation;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -40,7 +41,10 @@ class AdminController extends Controller
 
     public function insert_book(Request $request)
     {
-        $this->validate($request, ['title' => 'required', 'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048']);
+        $this->validate($request, ['title' => 'required', 'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            ,'author' => 'string',
+            'description' => 'string'
+        ]);
         $data = $request->except('image');
         $book = Book::create($data);
 
@@ -52,11 +56,9 @@ class AdminController extends Controller
             Book::updateOrCreate(['title' => $request->title], ['img_dir' => $imageName]);
         }
 
-        if ($request->has('type')) {
+            $book->category()->create($data);
 
-            $book->category()->create(Input::get('type'));
 
-        }
 
         Session::flash('success_message', 'Book added Successfully');
         return redirect()->route('admin.panel');
@@ -128,6 +130,7 @@ class AdminController extends Controller
     public function delete_user($id)
     {
         $user = User::find($id);
+        File::delete('profiles/'.$user->img_dir);
         $user->delete();
         Session::flash('success_message', 'User deleted successfully');
 //        return redirect()->action('AdminController@manage_users');
@@ -152,6 +155,7 @@ class AdminController extends Controller
         $user->update($data);
 
         if ($request->hasFile('image')) {
+            File::delete('profiles/'.$user->img_dir);
             $this->uploadImage($request, $user, 'profiles');
         }
 
@@ -195,7 +199,9 @@ class AdminController extends Controller
 
     public function deleteBook($id)
     {
-        Book::find($id)->delete();
+        $book = Book::find($id);
+        File::delete('uploads/'.$book->img_dir);
+        $book->delete();
         Session::flash('success_message', 'Book deleted successfully');
         return redirect()->route('admin.book_list');
     }
@@ -211,7 +217,9 @@ class AdminController extends Controller
         $data = $request->except('image');
         $book = Book::find($id);
         $book->update($data);
+        $book->category->update($data);
         if ($request->hasFile('image')) {
+            File::delete('uploads/'.$book->img_dir);
             $this->uploadImage($request, $book, 'uploads');
         }
         Session::flash('success_message', 'Book updated successfully');
@@ -229,6 +237,7 @@ class AdminController extends Controller
         $request->user()->update(['password' => $new_password]);
         return redirect()->route('admin.panel');
     }
+
 
 
 

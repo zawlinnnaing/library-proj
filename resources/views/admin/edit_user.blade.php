@@ -11,13 +11,11 @@
                               enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="form-group" style="margin-top: 20px;">
-                                <div class="col-md-4">
                                     @if(empty($user->img_dir))
                                         <img src="{{ asset('profiles/default_profile.png') }}" class="image is-128x128">
                                     @else
                                         <img src="{{asset('profiles/'.$user->img_dir)}}" class="image is-128x128">
                                     @endif
-                                </div>
                             </div>
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label for="name" class="col-md-4 control-label">Name</label>
@@ -104,14 +102,13 @@
                             {{--</div>--}}
                             {{--</div>--}}
 
-                            @if(empty($user->img_dir))
+                            {{-- Upload image --}}
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">Image</label>
-                                    <div class="col-sm-10">
+                                    <label class="control-label col-md-4">Image</label>
+                                    <div class="col-md-8">
                                         <input type="file" name="image" id="image" class="form-control">
                                     </div>
                                 </div>
-                            @endif
 
                             <div class="form-group{{ $errors->has('major') ? ' has-error' : '' }}">
                                 <label for="major" class="col-md-4 control-label">Major</label>
@@ -222,6 +219,10 @@
         }
         .is-danger{
             background-color: #ff5367 !important;
+        }
+        img.image{
+            display: block;
+            margin: auto;
         }
     </style>
 @endsection

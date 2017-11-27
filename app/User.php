@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -34,6 +35,16 @@ class User extends Authenticatable
 
     public function reservation(){
          return $this->hasMany('App\Reservation');
+    }
+
+    public function checkExpiredDate(){
+        if (Auth::check() &&  Auth::user()->expired_date <= date('Y-m-d')){
+            $noticount = Auth::user()->noti_count;
+            $noticount ++;
+            Auth::user()->update(['noti_count' => $noticount]);
+            return true;
+        }
+        return false;
     }
 
 }

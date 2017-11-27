@@ -87,7 +87,7 @@
                             Categories
                         </label>
                         <div class="col-sm-10">
-                            <select id="categories" name="type" value="{{ $book->category->type }}">
+                            <select id="categories" name="type">
                                 <option value="Others">
                                     Others
                                 </option>
@@ -108,7 +108,7 @@
                             Major
                         </label>
                         <div class="col-sm-10">
-                            <select disabled="" id="major" name="major" value="{{ $book->category->major }}">
+                            <select disabled="" id="major" name="major">
                                 <option value="Civil Engineering">
                                     Civil Engineering
                                 </option>
@@ -171,4 +171,26 @@
             margin-bottom: 0em !important;
         }
     </style>
+@endsection
+@section('script')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // body...
+            $('#categories').val("{{ $book->category->type }}")
+            $('#major').val('{{ $book->category->major }}');
+            switch($('#categories').find(":selected").text()){
+                case "Others":
+                    $('#major,#year').prop('disabled',true);
+                    break;
+                case "Reference":
+                    $('#major').prop('disabled',false);
+                    $('#year').prop('disabled',true);
+                    break;
+                default:
+                    $('#major,#year').prop('disabled',false);
+
+            }
+
+        });
+    </script>
 @endsection

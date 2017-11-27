@@ -1,18 +1,19 @@
-//          var categories = $("#categories").find(":selected").text();
+// called when categories is changed
 $('#categories').on('change', function () {
     switch ($(this).val()) {
         case "Others":
-            $("#major").attr("disabled", "disabled");
-            $("#year").prop("disabled", true);
+            $("#major").attr("disabled", "disabled").val('');
+            $("#year").prop("disabled", true).val('');
             break;
         case "Reference":
-
+            $("#year").prop("disabled", true);
             $("#major").prop("disabled", false);
             break;
         default:
             $("#major,#year").prop("disabled", false);
     }
 });
+
 
 $("a.is-danger").on("click", function (e) {
     e.preventDefault();
@@ -22,6 +23,7 @@ $("a.is-danger").on("click", function (e) {
     }
 });
 
+// AutoComplete search
 $('#q')
     .autocomplete({
     source: '/user_search',

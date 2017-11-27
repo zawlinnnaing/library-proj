@@ -28,19 +28,19 @@
           <div class="tile is-ancestor has-text-centered">
             <div class="tile is-parent">
               <article class="tile is-child box">
-                <p class="title is-4">{{ $users->count() }}</p>
+                <p class="title">{{ $users->count() }}</p>
                 <p class="subtitle">Members</p>
               </article>
             </div>
             <div class="tile is-parent">
               <article class="tile is-child box">
-                <p class="title is-4" >{{ $books_count  }}</p>
+                <p class="title" >{{ $books_count  }}</p>
                 <p class="subtitle">Books</p>
               </article>
             </div>
             <div class="tile is-parent">
               <article class="tile is-child box">
-                <p class="title is-4" >{{ $reservations->count() }}</p>
+                <p class="title" >{{ $reservations->count() }}</p>
                 <p class="subtitle">Reservations</p>
               </article>
             </div>
@@ -69,7 +69,7 @@
                       <tr>
                         <td width="5%"><i class="fa fa-book"></i></td>
                         <td>{{ $book->title }}</td>
-                        <td><a class="button is-small is-primary" href="/admin/book_edit/{{$book->id}}">Edit</a></td>
+                        <td><a class="button is-small is-primary" href="/admin/edit_book/{{$book->id}}">Edit</a></td>
                       </tr>
                       @endforeach
                       

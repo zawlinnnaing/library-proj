@@ -10,15 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+// Page routes
+Route::get('/', 'PageController@index')->name('index');
+Route::get('/detail/{id}','PageController@detail')->name('detail');
+Route::get('/about',function (){
+	return view('about');
+})->name('about');
+Route::get('/profile','PageController@profile')->name('profile');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+// AdminRoutes
 //Route::group(['middleware' => ['auth','isAdmin']], function (){
 
 Route::get('/admin/panel', 'AdminController@panel')->name('admin.panel');
