@@ -2,11 +2,11 @@
 $('#categories').on('change', function () {
     switch ($(this).val()) {
         case "Others":
-            $("#major").attr("disabled", "disabled").val('');
-            $("#year").prop("disabled", true).val('');
+            $("#major").attr("disabled", "disabled").val(null);
+            $("#year").prop("disabled", true).val(null);
             break;
         case "Reference":
-            $("#year").prop("disabled", true);
+            $("#year").prop("disabled", true).val(" ");
             $("#major").prop("disabled", false);
             break;
         default:
@@ -38,7 +38,7 @@ $('#q')
         }
     });
 
-$('#book').autocomplete({
+$('.book').autocomplete({
     source: '/book_search',
     minLength: 3,
     select: function (event ,ui) {

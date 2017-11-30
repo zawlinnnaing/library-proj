@@ -28,7 +28,8 @@ class AdminController extends Controller
 //    	$this->users = User::all();
 //    	$this->books = Book::all();
 //    	$this->reservations = Reservation::all();
-        }
+    }
+
     public function panel()
     {
         $users = User::all();
@@ -41,9 +42,9 @@ class AdminController extends Controller
 
     public function insert_book(Request $request)
     {
-        $this->validate($request, ['title' => 'required', 'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
-            ,'author' => 'string',
-            'description' => 'string'
+        $this->validate($request, ['title'       => 'required', 'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            , 'author'                           => 'string',
+                                   'description' => 'string'
         ]);
         $data = $request->except('image');
         $book = Book::create($data);
@@ -56,8 +57,7 @@ class AdminController extends Controller
             Book::updateOrCreate(['title' => $request->title], ['img_dir' => $imageName]);
         }
 
-            $book->category()->create($data);
-
+        $book->category()->create($data);
 
 
         Session::flash('success_message', 'Book added Successfully');
@@ -72,12 +72,12 @@ class AdminController extends Controller
     public function insert_member(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'stud_id' => 'required|string|max:255|unique:users',
-            'roll_no' => 'required|string|max:150',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'stud_id'  => 'required|string|max:255|unique:users',
+            'roll_no'  => 'required|string|max:150',
+            'image'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         $password = bcrypt($request->password);
         $data = $request->except('image');
@@ -130,7 +130,7 @@ class AdminController extends Controller
     public function delete_user($id)
     {
         $user = User::find($id);
-        File::delete('profiles/'.$user->img_dir);
+        File::delete('profiles/' . $user->img_dir);
         $user->delete();
         Session::flash('success_message', 'User deleted successfully');
 //        return redirect()->action('AdminController@manage_users');
@@ -146,16 +146,16 @@ class AdminController extends Controller
     public function update_user($id, Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name'    => 'required|string|max:255',
             'roll_no' => 'required|string|max:150',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'   => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         $data = $request->except('image');
         $user = User::find($id);
         $user->update($data);
 
         if ($request->hasFile('image')) {
-            File::delete('profiles/'.$user->img_dir);
+            File::delete('profiles/' . $user->img_dir);
             $this->uploadImage($request, $user, 'profiles');
         }
 
@@ -200,7 +200,7 @@ class AdminController extends Controller
     public function deleteBook($id)
     {
         $book = Book::find($id);
-        File::delete('uploads/'.$book->img_dir);
+        File::delete('uploads/' . $book->img_dir);
         $book->delete();
         Session::flash('success_message', 'Book deleted successfully');
         return redirect()->route('admin.book_list');
@@ -209,17 +209,36 @@ class AdminController extends Controller
     public function updateBook(Request $request, $id)
     {
         $this->validate($request, [
-            'title' => 'required|string|max:1000',
-            'author' => 'required|string|max:500',
+            'title'       => 'required|string|max:1000',
+            'author'      => 'required|string|max:500',
             'description' => 'string',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5000',
+            'image'       => 'image|mimes:jpeg,png,jpg,gif|max:5000',
         ]);
         $data = $request->except('image');
         $book = Book::find($id);
         $book->update($data);
-        $book->category->update($data);
+        if ($book->category == null) {
+            Category::create(['book_id' => $book->id], $data);
+        } else {
+            switch ($request->type) {
+                case 'Others':
+                    # code...
+                    $book->category->major = null;
+                    $book->category->year = null;
+
+                    break;
+                case 'Reference':
+                    $book->category->year = null;
+                    # code...
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+            $book->category->update($data);
+        }
         if ($request->hasFile('image')) {
-            File::delete('uploads/'.$book->img_dir);
+            File::delete('uploads/' . $book->img_dir);
             $this->uploadImage($request, $book, 'uploads');
         }
         Session::flash('success_message', 'Book updated successfully');
@@ -231,14 +250,36 @@ class AdminController extends Controller
     {
         Validator::make($request->all(), [
             'old_password' => 'required|old_password:' . Auth::user()->password,
-            'password' => 'required|string|min:6|confirmed',
+            'password'     => 'required|string|min:6|confirmed',
         ], ['old_password' => 'old password has to match'])->validate();
         $new_password = bcrypt($request->password);
         $request->user()->update(['password' => $new_password]);
         return redirect()->route('admin.panel');
     }
 
+    public function lendBook(Request $request)
+    {
+//        $this->validate($request, [
+//            'barcode_no' => 'required',
+//            'stud_id'    => 'required|string',
+//        ]);
+        $book = Book::where('barcode_no', $request->barcode_no)->first();
 
+
+        $user = User::where('stud_id', $request->stud_id)->first();
+
+
+        if (!($book->isEmpty and $user->isEmpty)) {
+            $book->users()->attach($user->id, ['issue_date' => $request->issue_date, 'return_date' => $request->return_date]);
+            Session::flash('message', 'Book checked out successfully');
+        } else {
+            Session::flash('message', 'Error(See below for detail)');
+
+        }
+//        return redirect()->('admin.issue_book')->(['book' => $book->get() , 'user' => $user->get()]);
+        return back()->with(['book' => $book->title , 'user' => $user->name]);
+
+    }
 
 
 }

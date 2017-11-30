@@ -51,7 +51,7 @@
                 <li>
                     <div class="field" style="margin-bottom: 0;">
                         <div class="control has-icons-left">
-                            <input class="input" id="book" placeholder="Search a book" type="text">
+                            <input class="input book" placeholder="Search a book" type="text">
                             <span class="icon is-small is-left">
                                         <i class="fa fa-search">
                                         </i>
@@ -61,10 +61,35 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{{ route('admin.change_password_form') }}">
-                            Change password(Admin)
+                    <a href=" /categories/0">
+                        Explore
                         </a>
                 </li>
+                <li>
+                    <a href="/about">
+                        About
+                    </a>
+                </li>
+                @guest
+                <li><a href="/login">Log in</li>
+                    @else
+                    <li>
+                        Profile name: {{ Auth::user()->name }}
+                    </li>
+                      @if(Auth::user()->checkExpiredDate())
+                      <li style="color: #F44336">Expired at: {{ Auth::user()->expired_date }}</li>
+                         @endif
+                        <li><a href="/profile">See profile</a></li>
+                <li> <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                    <form action="{{ route('logout') }}" id="logout-form" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </li>
+            
+            @endguest
             </ul>
         </section>
     </nav>
@@ -87,9 +112,9 @@
                 <!-- navbar-start, navbar-end... -->
                 <div class="navbar-end">
                     <!-- Book search box -->
-                    <div class="field column" style="margin-bottom: 0;">
+                    <div class="field column navbar-item" style="margin-bottom: 0;">
                         <div class="control has-icons-left">
-                            <input class="input" id="book" placeholder="Search a book" type="text">
+                            <input class="input book" placeholder="Search a book" type="text">
                             <span class="icon is-small is-left">
                                         <i class="fa fa-search">
                                         </i>
@@ -97,8 +122,8 @@
                             </input>
                         </div>
                     </div>
-                    <a class="navbar-item {{ Request::path() == '/'?'is-active':''}}" href="/">
-                        Categories
+                    <a class="navbar-item {{ Request::path() == '/categories/0'?'is-active':''}}" href="/categories/0">
+                        Explore
                     </a>
                     <a class="navbar-item {{ Request::path() == 'about'?'is-active':'' }}" href="/about">
                         About
@@ -149,9 +174,9 @@
 <script src="{{ asset('js/slideout.js') }}" type="text/javascript">
 </script>
 <script type="text/javascript">
-function userResult(ui) {}
-
-function bookResult(ui) {}
+function bookResult(ui) {
+    window.location.href = '/detail/' + ui.item.id;
+}
 
 var slideout = new Slideout({
     'panel': document.getElementById('panel'),

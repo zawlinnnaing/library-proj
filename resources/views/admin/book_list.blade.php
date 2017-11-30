@@ -9,7 +9,7 @@
             {{--book search field --}}
             <div class="field column">
                 <div class="control has-icons-left">
-                    <input class="input" type="text" placeholder="Search a book" id="book">
+                    <input class="input book" type="text" placeholder="Search a book">
                     <span class="icon is-small is-left">
       <i class="fa fa-search"></i>
     </span>

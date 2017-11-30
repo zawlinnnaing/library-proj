@@ -17,14 +17,18 @@ Route::get('/about',function (){
 	return view('about');
 })->name('about');
 Route::get('/profile','PageController@profile')->name('profile');
+Route::get('/categories/{keyword}','PageController@categories')->name('categories');
+Route::get('/archives/{keyword}','PageController@archives')->name('archives');
+Route::get('/archives/advanced_search/{keyword}','SearchController@advancedSearch')->name('archives.advanced_search');
+Route::post('/reserve_book/{id}','PageController@reserveBook')->name('reserve_book');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'PageController@index')->name('home');
 
 
 // AdminRoutes
-//Route::group(['middleware' => ['auth','isAdmin']], function (){
+Route::group(['middleware' => ['auth','isAdmin']], function (){
 
 Route::get('/admin/panel', 'AdminController@panel')->name('admin.panel');
 Route::get('/admin/add_book', 'AdminController@add_book')->name('admin.add_book');
@@ -45,12 +49,16 @@ Route::get('/admin/book_list', 'AdminController@bookList')->name('admin.book_lis
 Route::get('/admin/edit_book/{id}', 'AdminController@editBook')->name('admin.edit_book');
 Route::get('/admin/delete_book/{id}', 'AdminController@deleteBook')->name('admin.delete_book');
 Route::post('/admin/update_book/{id}', 'AdminController@updateBook')->name('admin.update_book');
-Route::post('/admin/issue_a_book');
+Route::get('/admin/issue_book',function(){
+	return view('admin.issue_book');
+})->name('admin.issue_book');
 Route::get('/admin/change_password_form', function () {
     return view('admin.change_password');
 })->name('admin.change_password_form');
 Route::post('/admin/change_password', 'AdminController@changePassword')->name('admin.change_password');
-//    });
+Route::post('/admin/lend_book','AdminController@lendBook')->name('admin.lend_book');
+   });
+
 Route::get('/user_search', 'SearchController@userSearch')->name('user_search');
 Route::get('/book_search', 'SearchController@bookSearch')->name('book_search');
 

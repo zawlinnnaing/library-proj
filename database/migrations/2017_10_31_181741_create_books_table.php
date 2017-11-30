@@ -21,6 +21,8 @@ class CreateBooksTable extends Migration
             $table->string('img_dir')->nullable();
             $table->boolean('availability')->default(true);
             $table->text('description')->nullable();
+            $table->integer('book_category')->nullable();
+            $table->string('barcode_no')->unique();
             $table->timestamps();
         });
     }

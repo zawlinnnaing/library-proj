@@ -62,16 +62,35 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" >Major</label>
                         <div class="col-sm-10">
-                            <select name="major" id="major" disabled>
-                                <option value="Cvil Engineering">Cvil Engineering</option>
-                                <option value="Mechanical Engineering">Mechanical Engineering</option>
-                                <option value="Mechatronic">Mechatronic</option>
-                                <option value="Architeture">Architeture</option>
-                                <option value="Information Technology">Information Technology</option>
-                                <option value="Electronic Engineering">Electronic Engineering</option>
-                                <option value="Electrial Power">Electrical Power</option>
-                                <option value="Chemical Engineering">Chemical Engineering</option>
-                                <option value="BioTech">BioTech</option>
+                            <select disabled="" id="major" name="major">
+                                <option value=""></option>
+                                <option value="Civil">
+                                    Civil Engineering
+                                </option>
+                                <option value="Mechanical">
+                                    Mechanical Engineering
+                                </option>
+                                <option value="Mechatronic">
+                                    Mechatronic
+                                </option>
+                                <option value="Architeture">
+                                    Architeture
+                                </option>
+                                <option value="IT">
+                                    Information Technology
+                                </option>
+                                <option value="EC">
+                                    Electronic Engineering
+                                </option>
+                                <option value="EP">
+                                    Electrical Power
+                                </option>
+                                <option value="Chemical">
+                                    Chemical Engineering
+                                </option>
+                                <option value="BioTech">
+                                    BioTech
+                                </option>
                             </select>
                         </div>
                     </div>

@@ -100,7 +100,7 @@
               <div class="card-content">
                 <div class="content">
                   <div class="control has-icons-left has-icons-right">
-                    <input class="input is-large" type="text" placeholder="" id="book" name="term">
+                    <input class="input is-large book" type="text" placeholder=""  name="term">
                     <span class="icon is-medium is-left">
                       <i class="fa fa-search"></i>
                     </span>

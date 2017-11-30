@@ -109,10 +109,11 @@
                         </label>
                         <div class="col-sm-10">
                             <select disabled="" id="major" name="major">
-                                <option value="Civil Engineering">
+                                <option value="">-- Select major --</option>
+                                <option value="Civil">
                                     Civil Engineering
                                 </option>
-                                <option value="Mechanical Engineering">
+                                <option value="Mechanical">
                                     Mechanical Engineering
                                 </option>
                                 <option value="Mechatronic">
@@ -121,16 +122,16 @@
                                 <option value="Architeture">
                                     Architeture
                                 </option>
-                                <option value="Information Technology">
+                                <option value="IT">
                                     Information Technology
                                 </option>
-                                <option value="Electronic Engineering">
+                                <option value="EC">
                                     Electronic Engineering
                                 </option>
-                                <option value="Electrial Power">
+                                <option value="EP">
                                     Electrical Power
                                 </option>
-                                <option value="Chemical Engineering">
+                                <option value="Chemical">
                                     Chemical Engineering
                                 </option>
                                 <option value="BioTech">
@@ -144,8 +145,13 @@
                             Year
                         </label>
                         <div class="col-sm-10">
+                            @if($book->category == null)
+                             <input disabled="" id="year" name="year" type="text" value="">
+                            </input>
+                            @else
                             <input disabled="" id="year" name="year" type="text" value="{{ $book->category->year }}">
                             </input>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group">
@@ -176,9 +182,13 @@
     <script type="text/javascript">
         $(document).ready(function () {
             // body...
-            $('#categories').val("{{ $book->category->type }}")
+            @if($book->category == null)
+            $('#categories').val('Others');
+            @else
+            $('#categories').val("{{ $book->category->type }}");
             $('#major').val('{{ $book->category->major }}');
-            switch($('#categories').find(":selected").text()){
+            @endif
+            switch($('#categories').val()){
                 case "Others":
                     $('#major,#year').prop('disabled',true);
                     break;

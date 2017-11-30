@@ -1,13 +1,10 @@
 @extends('layout') @component('title') MTU Library @endcomponent
-
+@include('welcome')
 @section('content')
     <div class="container">
         <div class="latest-books">
             <h1 class="title headings">
                 Latest Arrivals
-                <a>
-                    more >>
-                </a>
             </h1>
             <div class="columns">
                 @foreach($books as $book)
@@ -15,10 +12,9 @@
                         <div class="book">
                             <div class="thumbnail">
                                 @if(empty($book->img_dir))
-                                    <img class="image" src="{{ asset('uploads/kafka_on_the_shore.jpg') }}">
+                                    <a href="{{ route('detail',['id' => $book->id]) }}"><img class="image" src="{{ asset('uploads/default-book.gif') }}"></a>
                                 @else
-                                    <img class="image" src="{{ asset('uploads/'.$book->img_dir) }}">
-                                @endif
+                                    <a href="{{ route('detail',['id' => $book->id]) }}"><img class="image" src="{{ asset('uploads/'.$book->img_dir) }}"></a>                                @endif
                             </div>
                             <p class="caption">
                                 <a class="caption-link" href="{{ route('detail',['id' => $book->id]) }}">
@@ -172,6 +168,14 @@
         }
         .latest-books{
             margin-bottom: 2em;
+        }
+        .thumbnail {
+            transition:all ease 0.3s;
+        }
+        .thumbnail:hover{
+            /*box-shadow: 3px 3px 1px 2px #B3E5FC;*/
+            background-color: #B3E5FC;
+            /*padding: 6px;*/
         }
     </style>
     @endsection @section('script') @endsection

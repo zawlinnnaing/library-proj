@@ -7,6 +7,7 @@ $factory->define(App\Book::class, function (Faker $faker) {
         'title' => $faker->word,
         'author' => $faker->name,
         'description' => $faker->paragraph,
+        ''
     ];
 });
 

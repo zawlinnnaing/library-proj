@@ -76,7 +76,7 @@
 </h1>          <div class="explore-part is-mobile">
                 <p class="explore-msg">Explore our libray</p>
                 <div class="explore-btn">
-                    <a href="#nav-panel" id="explore-icon"><i class="fa fa-angle-double-down" aria-hidden="true"></i></a>
+                    <a href="#panel" id="explore-icon"><i class="fa fa-angle-double-down" aria-hidden="true"></i></a>
                 </div>
             </div>
             </div>
@@ -90,7 +90,7 @@
             e.preventDefault();
             $('body').css('overflow','scroll');
             // body...
-            $('html,body').animate({
+            $('body').animate({
                 scrollTop: $($(this).attr('href')).offset().top
             },500,function(){
                 $('.welcome').hide();
