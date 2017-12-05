@@ -1,13 +1,15 @@
   
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="{{ asset('mtu_VRn_icon.ico') }}" />
+
     <!-- Styles -->
     <style>
     @import url('https://fonts.googleapis.com/css?family=Lobster');
     body {
         background-color: #fff;
         color: #636b6f;
-        font-family: 'Raleway', sans-serif;
+        font-family: 'Aerial', sans-serif;
         font-weight: 100;
         height: 100vh;
         margin: 0;
@@ -88,7 +90,7 @@
         <script type="text/javascript">
         $('#explore-icon').click(function (e) {
             e.preventDefault();
-            $('body').css('overflow','scroll');
+            $('#').css('overflow','scroll');
             // body...
             $('body').animate({
                 scrollTop: $($(this).attr('href')).offset().top

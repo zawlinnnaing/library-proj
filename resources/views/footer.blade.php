@@ -34,4 +34,7 @@
             </div>
         </div>
     </div>
+    <div class="copyright">
+        <p>Copyright &copy; {{ date('Y') }} Mandalay Technological University </p>
+    </div>
 </footer>

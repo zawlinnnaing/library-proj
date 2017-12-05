@@ -1,5 +1,7 @@
-@extends('layout') @component('title') MTU Library @endcomponent
-@include('welcome')
+@extends('layout') 
+@component('title') MTU Library @endcomponent
+@section('welcome')@include('welcome')
+@endsection
 @section('content')
     <div class="container">
         <div class="latest-books">
@@ -45,9 +47,9 @@
                     <div class="column">
                         <p class="title is-5" style="margin-bottom: 0 !important;">Archives</p>
                         <ul>
-                            <li><a>References</a></li>
-                            <li><a>Thesis</a></li>
-                            <li><a>Old questions</a></li>
+                            <li><a href="{{ route('archives','References') }}">References</a></li>
+                            <li><a href="{{ route('archives','Thesis') }}">Thesis</a></li>
+                            <li><a href="{{ route('archives','Old-questions') }}">Old questions</a></li>
                         </ul>
                     </div>
                 </div>
@@ -87,7 +89,6 @@
         </div>
     </div>
 @endsection @section('style')
-
     <style type="text/css">
         h1.headings {
             border-bottom: 1px solid #BDBDBD;
@@ -177,6 +178,15 @@
             background-color: #B3E5FC;
             /*padding: 6px;*/
         }
+        #panel{
+            overflow: scroll;
+        }
+        .slideout-panel{
+            height: 100vh;
+        }
     </style>
-    @endsection @section('script') @endsection
+    @endsection @section('script')
+    <script type="text/javascript">
+          </script>
+     @endsection
     </div>

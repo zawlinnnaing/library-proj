@@ -70,7 +70,7 @@
     </div>
 </div>
 <div class="mission_vision">
-    <div class="mission">
+    <div class="mission" data-aos="fade-right">
         <div class="columns">
             <div class="column is-2">
                 <img src="{{ asset('mission.png') }}" class="icon">
@@ -80,7 +80,7 @@
             </div>
         </div>
     </div>
-    <div class="vision">
+    <div class="vision" data-aos="fade-left">
         <div class="columns">
             <div class="column is-2"></div>
             <div class="column">
@@ -107,7 +107,7 @@
                 <p>Email: oshima@kamuralib.com</p>
             </div>
         </div>
-        <div class="staff-cards">
+        <div class="staff-cards" >
             <div class="card">
                 <p>Name: Miss Saeki</p>
                 <p>Job title: Head of Librarian</p>
@@ -119,7 +119,7 @@
                 <p>Email: oshima@kamuralib.com</p>
             </div>
         </div>
-        <div class="staff-cards">
+        <div class="staff-cards" >
             <div class="card">
                 <p>Name: Miss Saeki</p>
                 <p>Job title: Head of Librarian</p>
@@ -134,6 +134,8 @@
     </div>
 </div>
 @endsection @section('style')
+<link rel="stylesheet" href="{{ asset('css\aos.css') }}">
+
 <style type="text/css">
 li span {
     display: flex;
@@ -189,4 +191,13 @@ ol>li {
 	text-decoration: underline !important;
 }
 </style>
+@endsection
+@section('script')
+    <script type="text/javascript" src="{{ asset('js\aos.js') }}"></script>
+    <script type="text/javascript">
+        AOS.init({
+            duration: 600,
+            offset: 350,
+        });
+    </script>
 @endsection

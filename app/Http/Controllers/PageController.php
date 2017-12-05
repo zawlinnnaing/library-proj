@@ -21,6 +21,7 @@ class PageController extends Controller
     //        return false;
     //    }
     protected $keyword;
+    protected $itemPerPage;
     public function index()
     {
         $books = Book::all()->sortByDesc('created_at')->take(4);
@@ -45,45 +46,46 @@ class PageController extends Controller
 
     public function categories($keyword)
     {
+        $itemPerPage = 10;
         switch ($keyword) {
             case 0:
-                $books = Book::whereBetween('book_category', [0, 99])->paginate(10);
+                $books = Book::whereBetween('book_category', [0, 99])->paginate($itemPerPage);
                 $title = 'Generalities';
                 break;
             case 1:
-                $books = Book::whereBetween('book_category', [100, 199])->paginate(10);
+                $books = Book::whereBetween('book_category', [100, 199])->paginate($itemPerPage);
                 $title = 'Philosophy & Psychology';
                 break;
             case 2;
-                $books = Book::whereBetween('book_category', [200, 299])->paginate(10);
+                $books = Book::whereBetween('book_category', [200, 299])->paginate($itemPerPage);
                 $title = 'Religion';
                 break;
             case 3:
-                $books = Book::whereBetween('book_category', [300, 399])->paginate(10);
+                $books = Book::whereBetween('book_category', [300, 399])->paginate($itemPerPage);
                 $title = 'Social sciences';
                 break;
             case 4:
-                $books = Book::whereBetween('book_category', [400, 499])->paginate(10);
+                $books = Book::whereBetween('book_category', [400, 499])->paginate($itemPerPage);
                 $title = 'Language';
                 break;
             case 5:
-                $books = Book::whereBetween('book_category', [500, 599])->paginate(10);
+                $books = Book::whereBetween('book_category', [500, 599])->paginate($itemPerPage);
                 $title = 'Natural sciences & mathematics';
                 break;
             case 6:
-                $books = Book::whereBetween('book_category', [600, 699])->paginate(10);
+                $books = Book::whereBetween('book_category', [600, 699])->paginate($itemPerPage);
                 $title = 'Technology(Applied sciences)';
                 break;
             case 7:
-                $books = Book::whereBetween('book_category', [700, 799])->paginate(10);
+                $books = Book::whereBetween('book_category', [700, 799])->paginate($itemPerPage);
                 $title = 'The arts Fine and decorative arts';
                 break;
             case 8:
-                $books = Book::whereBetween('book_category', [800, 899])->paginate(10);
+                $books = Book::whereBetween('book_category', [800, 899])->paginate($itemPerPage);
                 $title = 'Literature & rhetoric';
                 break;
             case 9:
-                $books = Book::whereBetween('book_category', [900, 999])->paginate(10);
+                $books = Book::whereBetween('book_category', [900, 999])->paginate($itemPerPage);
                 $title = 'Geography & history';
                 break;
             default:
@@ -101,7 +103,7 @@ class PageController extends Controller
         }
         $books = Book::whereHas('category', function ($query) {
             $query->where('type', '=', $this->keyword);
-        })->get();
+        })->paginate(10);
         return view('categories', ['books' => $books, 'title' => $this->keyword]);
 
     }

@@ -1,9 +1,11 @@
-::selection{
+::selection {
     background: #B3E5FC;
 }
-::-moz-selection{
+
+::-moz-selection {
     background: #B3E5FC;
 }
+
 a {
     text-decoration: none !important;
 }
@@ -17,12 +19,25 @@ td .button {
 ul.pagination {
     margin-top: 2rem;
     justify-content: space-evenly !important;
+    list-style: none;
 }
 
 .pagination li a {
     padding: 10px 20px;
-    background: #81D4FA;
+    /*background: #81D4FA;*/
+    border: 1px solid black;
     color: black;
+    font-size: 12px;
+    -webkit-transition: ease all .5s;
+    -moz-transition: ease all .5s;
+    -ms-transition: ease all .5s;
+    -o-transition: ease all .5s;
+    transition: ease all .5s;
+}
+
+.pagination li a:hover {
+    background-color: #424242;
+    color: #eeeeee;
 }
 
 .column .panel-heading {
@@ -38,7 +53,7 @@ ul.pagination {
 }
 
 .ui-menu {
-    display: inline-block !important;
+    width: 150px;
     background-color: white;
     border: 1px solid #eee;
 }
@@ -56,6 +71,7 @@ ul.pagination {
 }
 
 
+
 /* css from template*/
 
 body {
@@ -65,15 +81,19 @@ body {
     max-height: fit-content;
     margin: 0 !important;
     background-color: #ffffff;
+    /*overflow:  scroll;*/
 }
 
 
-/*Navbar style*/
-nav.navbar {
-    /*border-top: 4px solid #276cda;*/
-    /*margin-bottom: 1rem;*/
-    background-color: #212121 !important;
 
+/*Navbar style*/
+
+nav.navbar {
+    position: sticky;
+    z-index: 3;
+    top: 0;
+    width: 100vw;
+    background-color: #212121 !important;
 }
 
 .navbar-brand {
@@ -103,6 +123,12 @@ nav.navbar {
 .navbar-item.has-dropdown.is-active .navbar-link {
     color: #212121;
 }
+.navbar-burger{
+    margin-top: auto;
+    margin-bottom: auto; 
+}
+
+
 /*Navbar*/
 
 .columns {
@@ -127,6 +153,7 @@ nav.navbar {
     background-color: transparent;
     color: #276cda;
 }
+
 
 
 /*.menu-list a.is-active {*/
@@ -195,6 +222,7 @@ nav.navbar {
 }
 
 
+
 /*Navbar mobile*/
 
 .menu-section-list {
@@ -205,9 +233,11 @@ nav.navbar {
 .menu-section-list>li {
     padding: 1em;
 }
-section.menu-section{
+
+section.menu-section {
     font-size: 16px;
 }
+
 
 
 /*SLideout css*/
@@ -237,7 +267,6 @@ section.menu-section{
     z-index: 0;
     will-change: transform;
     /* A background-color is required */
-    height: 100vh;
 }
 
 .slideout-open,
@@ -257,6 +286,7 @@ main {
 
 #panel {
     background-color: #ffffff;
+    /*overflow: scroll;*/
 }
 
 li.categories {
@@ -281,51 +311,99 @@ li.categories {
 }
 
 
-/* Footer*/
-.footer{
-    background-color: #212121;
 
+/* Footer*/
+
+.footer {
+    background-color: #212121;
+    padding: 0;
 }
-.footer .column{
+
+.footer .column {
     display: block;
     padding: auto 0 !important;
     color: white;
 }
-.footer .logo  {
+.footer .container{
+    padding: 3em 1.5em;
+}
+
+.footer .logo {
     margin: auto;
     display: flex;
 }
-.footer .mtu-footer{
-    margin-left: 1em; 
+
+.footer .mtu-footer {
+    margin-left: 1em;
 }
 
-.footer .mtu-footer span{
+.footer .mtu-footer span {
     font-size: 2em;
     font-weight: bold;
 }
-.footer .title{
+
+.footer .title {
     color: white;
     text-align: center;
     margin-top: 0;
 }
-.footer .social-media{
+
+.footer .social-media {
     display: flex;
     justify-content: space-around;
 }
-.footer .social-media i{
+
+.footer .social-media i {
     color: white;
     font-size: 3em;
     margin: 0.5em;
 }
-.footer .email{
+
+.footer .email {
     color: #81D4FA;
 }
-.footer .contact-info p{
+
+.footer .contact-info p {
     line-height: 2 !important;
 }
-.footer{
+
+.footer {
     margin-top: 1em;
 }
-.footer.contact-info{
+
+.footer.contact-info {
     padding-left: 1.5em;
 }
+
+.footer .copyright {
+    width: 100vw;
+    text-align: center;
+    background-color: #eeeeee;
+    color: #424242;
+    padding: 0.2em 0;
+}
+
+.footer .copyright p {
+    line-height: 2;
+    margin: 0 !important;
+}
+
+
+/*Animations */
+
+@keyframes fade {
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+
+.library-info {
+    animation-duration: .5s;
+    animation-name: fadeIn;
+}
+
+
+/*End animations*/

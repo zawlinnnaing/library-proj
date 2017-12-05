@@ -3,37 +3,33 @@
 namespace App\Http\Controllers;
 
 //use Illuminate\Contracts\Session\Session;
-use Illuminate\Http\Request;
-use App\User;
 use App\Book;
 use App\Category;
-
-
 use App\Reservation;
+use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Session;
-use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     //
-//    protected $users,$books,$categories,$reservations;
+    //    protected $users,$books,$categories,$reservations;
 
     public function __construct()
     {
-//    	$this->users = User::all();
-//    	$this->books = Book::all();
-//    	$this->reservations = Reservation::all();
+//        $this->users = User::all();
+        //        $this->books = Book::all();
+        //        $this->reservations = Reservation::all();
     }
 
     public function panel()
     {
-        $users = User::all();
-        $books = Book::all();
+        $users        = User::all();
+        $books        = Book::all();
         $fifteenBooks = $books->take(10);
         $reservations = Reservation::all();
         $reservations = $reservations->where('reserved_time', '>=', date('Y-m-d'));
@@ -42,23 +38,20 @@ class AdminController extends Controller
 
     public function insert_book(Request $request)
     {
-        $this->validate($request, ['title'       => 'required', 'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
-            , 'author'                           => 'string',
-                                   'description' => 'string'
-        ]);
+        $this->validate($request,$this->bookRules());
+        $debug = $request->barcode_no;
+        $debug;
         $data = $request->except('image');
         $book = Book::create($data);
-
 
         if ($request->hasFile('image')) {
             $imageName = $request->file('image')->getClientOriginalName();
 
             request()->image->move(public_path('uploads'), $imageName);
-            Book::updateOrCreate(['title' => $request->title], ['img_dir' => $imageName]);
+            Book::updateOrCreate(['id' => $book->id], ['img_dir' => $imageName]);
         }
 
         $book->category()->create($data);
-
 
         Session::flash('success_message', 'Book added Successfully');
         return redirect()->route('admin.panel');
@@ -80,18 +73,17 @@ class AdminController extends Controller
             'image'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         $password = bcrypt($request->password);
-        $data = $request->except('image');
+        $data     = $request->except('image');
         //creating user and updating password
         $user = User::create($data);
         $user->update(['password' => $password]);
 
-
         if ($request->hasFile('image')) {
             //moving image to profiles directory
-//            $imageName = $request->file('image')->getClientOriginalName();
-//            request()->image->move(public_path('profiles'), $imageName);
-//
-//            $user->update(['img_dir' => $imageName]);
+            //            $imageName = $request->file('image')->getClientOriginalName();
+            //            request()->image->move(public_path('profiles'), $imageName);
+            //
+            //            $user->update(['img_dir' => $imageName]);
             $this->uploadImage($request, $user, 'profiles');
 
         }
@@ -208,12 +200,7 @@ class AdminController extends Controller
 
     public function updateBook(Request $request, $id)
     {
-        $this->validate($request, [
-            'title'       => 'required|string|max:1000',
-            'author'      => 'required|string|max:500',
-            'description' => 'string',
-            'image'       => 'image|mimes:jpeg,png,jpg,gif|max:5000',
-        ]);
+        $this->validate($request,$this->bookRules());
         $data = $request->except('image');
         $book = Book::find($id);
         $book->update($data);
@@ -224,7 +211,7 @@ class AdminController extends Controller
                 case 'Others':
                     # code...
                     $book->category->major = null;
-                    $book->category->year = null;
+                    $book->category->year  = null;
 
                     break;
                 case 'Reference':
@@ -260,14 +247,12 @@ class AdminController extends Controller
     public function lendBook(Request $request)
     {
 //        $this->validate($request, [
-//            'barcode_no' => 'required',
-//            'stud_id'    => 'required|string',
-//        ]);
+        //            'barcode_no' => 'required',
+        //            'stud_id'    => 'required|string',
+        //        ]);
         $book = Book::where('barcode_no', $request->barcode_no)->first();
 
-
         $user = User::where('stud_id', $request->stud_id)->first();
-
 
         if (!($book->isEmpty and $user->isEmpty)) {
             $book->users()->attach($user->id, ['issue_date' => $request->issue_date, 'return_date' => $request->return_date]);
@@ -277,9 +262,17 @@ class AdminController extends Controller
 
         }
 //        return redirect()->('admin.issue_book')->(['book' => $book->get() , 'user' => $user->get()]);
-        return back()->with(['book' => $book->title , 'user' => $user->name]);
+        return back()->with(['book' => $book->title, 'user' => $user->name]);
 
     }
 
+    private function bookRules (){
+        return ['title'         => 'required|string|max:1000',
+                'author'        => 'required|string|max:500',
+                'description'   => 'string|nullable',
+                'image'         => 'image|mimes:jpeg,png,jpg,gif|max:5000',
+                'barcode_no'    => 'required|string|digits:6',
+                'book_category' => 'required'];
+    }
 
 }

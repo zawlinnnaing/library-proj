@@ -36,6 +36,7 @@ class SearchController extends Controller
 
     public function advancedSearch(Request $request, $keyword)
     {
+        $itemPerPage = 10;
         $this->validate($request, [
             'year' => 'digits:4|nullable'
         ]);
@@ -50,14 +51,14 @@ class SearchController extends Controller
                     ['type', '=', $this->keyword],
                     ['major', '=', $this->major]
                 ]);
-            })->get();
+            })->paginate($itemPerPage);
         } elseif (!isset($this->major) && isset($this->year)) {
             $books = Book::whereHas('category', function ($query) {
                 $query->where([
                     ['type', '=', $this->keyword],
                     ['year', '=', (string)$this->year]
                 ]);
-            })->get();
+            })->paginate($itemPerPage);
 
         } else {
             $books = Book::whereHas('category', function ($query) {
@@ -66,7 +67,7 @@ class SearchController extends Controller
                     ['major', '=', $this->major],
                     ['year', '=',(string)$this->year]
                 ]);
-            })->get();
+            })->paginate($itemPerPage);
         }
             return view('categories', ['books' => $books, 'title' => $keyword]);
 

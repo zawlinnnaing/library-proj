@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="shortcut icon" href="{{ asset('mtu_VRn_icon.ico') }}" />
     <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <!-- Bulma Version 0.6.0 -->
@@ -14,6 +15,7 @@
     <link href="{{ asset('css/index.css') }}" rel="stylesheet">
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js">
     </script>
     <style rel="stylesheet">
@@ -88,15 +90,14 @@
                         {{ csrf_field() }}
                     </form>
                 </li>
-            
-            @endguest
+                @endguest
             </ul>
         </section>
     </nav>
     <div id="panel">
         <nav aria-label="main navigation" class="navbar" role="navigation" id="nav-panel">
             <div class="navbar-brand">
-                <a class="navbar-item" href="/">
+                <a class="navbar-item" href="/#panel">
                         MTU Library
                     </a>
                 <div class="navbar-burger">

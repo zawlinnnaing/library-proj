@@ -52,6 +52,30 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-sm-2">Summery Number(0-999)</label>
+                        <div class="col-sm-10">
+                            <input type="number" name="book_category" min="0" max="1000" class="form-control"
+                                   value="{{ $book->book_category }}">
+                            @if($errors->has('book_category'))
+                                <span class="help-block"><strong>
+                            {{ $errors->first('book_category') }}
+                        </strong></span> @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Book Number</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="barcode_no" placeholder="6-digits" class="form-control"
+                                value="{{ $book->barcode_no }}">
+                            @if($errors->has('barcode_no'))
+                                <span class="help-block"><strong>
+                            {{ $errors->first('barcode_no') }}
+                        </strong></span> @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-sm-2">
                             Description
                         </label>
@@ -146,11 +170,12 @@
                         </label>
                         <div class="col-sm-10">
                             @if($book->category == null)
-                             <input disabled="" id="year" name="year" type="text" value="">
-                            </input>
+                                <input disabled="" id="year" name="year" type="text" value="">
+                                </input>
                             @else
-                            <input disabled="" id="year" name="year" type="text" value="{{ $book->category->year }}">
-                            </input>
+                                <input disabled="" id="year" name="year" type="text"
+                                       value="{{ $book->category->year }}">
+                                </input>
                             @endif
                         </div>
                     </div>
@@ -188,16 +213,16 @@
             $('#categories').val("{{ $book->category->type }}");
             $('#major').val('{{ $book->category->major }}');
             @endif
-            switch($('#categories').val()){
+                switch ($('#categories').val()) {
                 case "Others":
-                    $('#major,#year').prop('disabled',true);
+                    $('#major,#year').prop('disabled', true);
                     break;
                 case "Reference":
-                    $('#major').prop('disabled',false);
-                    $('#year').prop('disabled',true);
+                    $('#major').prop('disabled', false);
+                    $('#year').prop('disabled', true);
                     break;
                 default:
-                    $('#major,#year').prop('disabled',false);
+                    $('#major,#year').prop('disabled', false);
 
             }
 

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layout')
 
 @section('content')
 <div class="container">
@@ -44,4 +44,17 @@
         </div>
     </div>
 </div>
+@endsection
+@section('style')
+    <style type="text/css">
+        @media screen and (min-width: 769px) {
+            .footer {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                left: 0;
+            }
+        }
+
+    </style>
 @endsection
