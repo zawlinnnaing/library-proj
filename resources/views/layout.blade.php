@@ -46,6 +46,7 @@
 </html>
 
 <body>
+    @yield('welcome')
     <!-- Navbar for mobile -->
     <nav class="menu" id="menu">
         <section class="menu-section">
