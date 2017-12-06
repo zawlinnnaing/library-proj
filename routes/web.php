@@ -57,6 +57,7 @@ Route::get('/admin/change_password_form', function () {
 })->name('admin.change_password_form');
 Route::post('/admin/change_password', 'AdminController@changePassword')->name('admin.change_password');
 Route::post('/admin/lend_book','AdminController@lendBook')->name('admin.lend_book');
+Route::get('/admin/print_book','AdminController@printBook')->name('admin.print_book');
    });
 
 Route::get('/user_search', 'SearchController@userSearch')->name('user_search');

@@ -275,4 +275,9 @@ class AdminController extends Controller
                 'book_category' => 'required'];
     }
 
+    public function printBook(){
+        $books = Book::all();
+        return view('printBook',['books' => $books]);
+    }
+
 }
