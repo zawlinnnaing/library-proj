@@ -1,9 +1,9 @@
 @extends('layout')
-
+@component('title') Login @endcomponent
 @section('content')
     <div class="container">
         <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8">
             <h3 class="heading">Login</h3>
 
             <div class="panel-body">
@@ -74,6 +74,9 @@
             padding: 1em;
             margin: 0 !important;
         }
+        #panel{
+            height: 100vh;
+        }
         @media screen and (min-width: 769px) {
             .footer {
                 position: absolute;
@@ -81,6 +84,9 @@
                 right: 0;
                 left: 0;
             }
+        }
+        div{
+            margin-right: 0 !important;
         }
     </style>
 @endsection
