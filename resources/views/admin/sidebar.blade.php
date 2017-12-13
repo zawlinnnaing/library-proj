@@ -23,7 +23,7 @@
             </li>
             <li><a class="{{ Request::path() == 'admin/reservations'? 'is-active':'' }}" href="{{ route('admin.reservations') }}">Reservations</a></li>
             <li><a class="{{ Request::path() == 'admin/manage_users' ? 'is-active':'' }}" href="/admin/manage_users">Manage users</a></li>
-            <li><a href="{{ route('admin.print_book') }}">Print Book Table</li>
+            <li><a href="{{ route('admin.print_book') }}">Print Book Table</a></li>
 
             <!--             <li><a>Cloud Storage Environment Settings</a></li>
                         <li><a>Authentication</a></li> -->

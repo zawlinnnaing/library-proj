@@ -40,7 +40,6 @@ class AdminController extends Controller
     {
         $this->validate($request,$this->bookRules());
         $debug = $request->barcode_no;
-        $debug;
         $data = $request->except('image');
         $book = Book::create($data);
 

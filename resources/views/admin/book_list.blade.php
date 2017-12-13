@@ -18,7 +18,7 @@
 
         </div>
         @foreach($books as $book)
-            <div class="columns">
+            <div class="columns book-list">
                 <div class="column">
                     <p class="subtitle">Title:</p>
                     <p>{{ ucfirst($book->title) }}</p>
@@ -38,7 +38,7 @@
 @endsection
 @section('style')
     <style rel="stylesheet" type="text/css">
-        .columns {
+        .book-list {
             border-bottom: 1px solid #bdbdbd;
         }
 
