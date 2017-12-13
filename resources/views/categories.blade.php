@@ -73,7 +73,7 @@
                             Thesis is a long essay or dissertation involving personal research, written by a candidate
                             for a university degree.
                         </div>
-                    @elseif($title == 'Old questions')
+                    @elseif($title == 'Old question')
                         <div class="message-body">
                             Old questions for exams.
                         </div>
@@ -91,7 +91,7 @@
                                     <div class="column">
                                         <input class="button" type="submit" name="submit" value="Submit">
                                     </div>
-                                @elseif($title == 'Thesis'|| $title == 'Old questions')
+                                @elseif($title == 'Thesis'|| $title == 'Old question')
                                     <div class="column">
                                         @include('major')
                                     </div>

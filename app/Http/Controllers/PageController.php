@@ -11,17 +11,8 @@ class PageController extends Controller
 {
     //
 
-//    public function checkExpiredDate(){
-    //        if (Auth::check() &&  Auth::user()->expired_date >= date('y-m-d')){
-    //            $noticount = Auth::user()->noti_count;
-    //            $noticount ++;
-    //            Auth::user()->update(['noti_count' => $noticount]);
-    //            return true;
-    //        }
-    //        return false;
-    //    }
-    protected $keyword;
-    protected $itemPerPage;
+//    protected $keyword;
+//    protected $itemPerPage;
     public function index()
     {
         $books = Book::all()->sortByDesc('created_at')->take(4);
@@ -36,10 +27,10 @@ class PageController extends Controller
 
     public function profile()
     {
-        $user         = Auth::user();
+        $user = Auth::user();
         $expired_date = date_create($user->expired_date);
-        $today        = date_create();
-        $date_diff    = date_diff($expired_date, $today);
+        $today = date_create();
+        $date_diff = date_diff($expired_date, $today);
 
         return view('profile', ['user' => Auth::user(), 'date_diff' => $date_diff->format("%a")]);
     }
@@ -97,16 +88,16 @@ class PageController extends Controller
 
     public function archives($keyword)
     {
-        $this->keyword = $keyword;
         if ($keyword == 'Old-questions') {
-            $this->keyword = 'Old questions';
+            $keyword = 'Old question';
         }
-        $books = Book::whereHas('category', function ($query) {
-            $query->where('type', '=', $this->keyword);
+        $books = Book::whereHas('category', function ($query) use ($keyword) {
+            $query->where('type', '=', $keyword);
         })->paginate(10);
-        return view('categories', ['books' => $books, 'title' => $this->keyword]);
+        return view('categories', ['books' => $books, 'title' => $keyword]);
 
     }
+
     public function reserveBook(Request $request, $id)
     {
         $this->validate($request, [
@@ -116,15 +107,14 @@ class PageController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
             $book->reservation()->create([
-                'user_id' => $user->id,
+                'user_id'       => $user->id,
                 'reserved_time' => $request->reserved_time
             ]);
             $book->stock_count--;
             $book->save();
-            Session::flash('msg','Book reserved successfully');
-        }
-        else{
-            Session::flash('msg','Error occured');
+            Session::flash('msg', 'Book reserved successfully');
+        } else {
+            Session::flash('msg', 'Error occured');
         }
         return redirect()->back();
     }

@@ -47,4 +47,8 @@ class User extends Authenticatable
         return false;
     }
 
+    public function isAdmin(){
+        return Auth::check() && Auth::user()->email == 'admin@mtu.com';
+    }
+
 }

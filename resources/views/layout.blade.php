@@ -146,6 +146,11 @@
                                 Expired at: {{ Auth::user()->expired_date }}
                             </li>
                             @endif
+                            @if(Auth::user()->isAdmin())
+                            <li class="navbar-item">
+                                <a href="{{ route('admin.panel') }}">Panel</a>
+                            </li>
+                            @endif
                             <li class="navbar-item"><a href="/profile">
                                 See profile</a>
                             </li>
