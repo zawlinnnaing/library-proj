@@ -12,6 +12,7 @@ use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Session;
 
 class AdminController extends Controller
@@ -28,8 +29,8 @@ class AdminController extends Controller
 
     public function panel()
     {
-        $users        = User::all();
-        $books        = Book::all();
+        $users = User::all();
+        $books = Book::all();
         $fifteenBooks = $books->take(10);
         $reservations = Reservation::all();
         $reservations = $reservations->where('reserved_time', '>=', date('Y-m-d'));
@@ -38,7 +39,7 @@ class AdminController extends Controller
 
     public function insert_book(Request $request)
     {
-        $this->validate($request,$this->bookRules());
+        $this->validate($request, $this->bookRules());
         $debug = $request->barcode_no;
         $data = $request->except('image');
         $book = Book::create($data);
@@ -72,7 +73,7 @@ class AdminController extends Controller
             'image'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         $password = bcrypt($request->password);
-        $data     = $request->except('image');
+        $data = $request->except('image');
         //creating user and updating password
         $user = User::create($data);
         $user->update(['password' => $password]);
@@ -165,7 +166,7 @@ class AdminController extends Controller
 
     public function reservations()
     {
-        $reservations = Reservation::with(['book', 'user'])->get();
+        $reservations = Reservation::with(['book', 'user'])->orderBy('user_id')->paginate(10);
         return view('admin.reservations', ['reservations' => $reservations]);
     }
 
@@ -199,7 +200,7 @@ class AdminController extends Controller
 
     public function updateBook(Request $request, $id)
     {
-        $this->validate($request,$this->bookRules());
+        $this->validate($request,$this->bookRules($id));
         $data = $request->except('image');
         $book = Book::find($id);
         $book->update($data);
@@ -210,7 +211,7 @@ class AdminController extends Controller
                 case 'Others':
                     # code...
                     $book->category->major = null;
-                    $book->category->year  = null;
+                    $book->category->year = null;
 
                     break;
                 case 'Reference':
@@ -228,27 +229,29 @@ class AdminController extends Controller
             $this->uploadImage($request, $book, 'uploads');
         }
         Session::flash('success_message', 'Book updated successfully');
-        return redirect()->route('admin.book_list');
+        return redirect()->back();
 
     }
 
     public function changePassword(Request $request)
     {
-        Validator::make($request->all(), [
-            'old_password' => 'required|old_password:' . Auth::user()->password,
-            'password'     => 'required|string|min:6|confirmed',
-        ], ['old_password' => 'old password has to match'])->validate();
+
+            Validator::make($request->all(), [
+                'old_password' => 'required|old_password:' . Auth::user()->password,
+                'password'     => 'required|string|min:6|confirmed',
+            ], ['old_password' => 'old password has to match'])->validate();
         $new_password = bcrypt($request->password);
         $request->user()->update(['password' => $new_password]);
+        Session::flash('success_message','Password changed successfully');
         return redirect()->route('admin.panel');
     }
 
     public function lendBook(Request $request)
     {
-//        $this->validate($request, [
-        //            'barcode_no' => 'required',
-        //            'stud_id'    => 'required|string',
-        //        ]);
+        $this->validate($request, [
+                    'barcode_no' => 'required',
+                    'stud_id'    => 'required|string',
+                ]);
         $book = Book::where('barcode_no', $request->barcode_no)->first();
 
         $user = User::where('stud_id', $request->stud_id)->first();
@@ -265,18 +268,20 @@ class AdminController extends Controller
 
     }
 
-    private function bookRules (){
-        return ['title'         => 'required|string|max:1000',
+    private function bookRules($id)
+    {
+       return ['title'         => 'required|string|max:1000',
                 'author'        => 'required|string|max:500',
                 'description'   => 'string|nullable',
                 'image'         => 'image|mimes:jpeg,png,jpg,gif|max:5000',
-                'barcode_no'    => 'required|string|digits:6',
+                'barcode_no'    => 'required|string|digits:6|unique:books,barcode_no,'.$id,
                 'book_category' => 'required'];
     }
 
-    public function printBook(){
+    public function printBook()
+    {
         $books = Book::all();
-        return view('printBook',['books' => $books]);
+        return view('printBook', ['books' => $books]);
     }
 
 }

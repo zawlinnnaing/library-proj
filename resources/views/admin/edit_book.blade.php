@@ -11,6 +11,9 @@
                 @endforeach
             </div>
         @endif
+        {{--Success message--}}
+        @include('admin.session_success_msg')
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 Edit a Book
@@ -76,6 +79,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label col-sm-2">Barcode</label>
+                        <div class="col-sm-10">
+                            <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($book->barcode_no,"C39") }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label col-sm-2">
                             Description
                         </label>
@@ -101,8 +111,7 @@
                             Stock Counts
                         </label>
                         <div class="col-sm-10">
-                            <input id="stock_counts" min="1" name="stock_counts" type="number"
-                                   value="{{ $book->stock_count }}">
+                            <input type="number" name="stock_count" value="{{ $book->stock_count }}">
 
                         </div>
                     </div>
@@ -169,14 +178,14 @@
                             Year
                         </label>
                         <div class="col-sm-10">
-                            @if($book->category == null)
-                                <input disabled="" id="year" name="year" type="text" value="">
-                                </input>
-                            @else
+                            {{--@if($book->category == null)--}}
+                                {{--<input disabled="" id="year" name="year" type="text" value="">--}}
+                                {{--</input>--}}
+                            {{--@else--}}
                                 <input disabled="" id="year" name="year" type="text"
                                        value="{{ $book->category->year }}">
                                 </input>
-                            @endif
+                            {{--@endif--}}
                         </div>
                     </div>
                     <div class="form-group">
@@ -207,12 +216,12 @@
     <script type="text/javascript">
         $(document).ready(function () {
             // body...
-            @if($book->category == null)
-            $('#categories').val('Others');
-            @else
+            {{--@if($book->category == null)--}}
+            {{--$('#categories').val('Others');--}}
+            {{--@else--}}
             $('#categories').val("{{ $book->category->type }}");
             $('#major').val('{{ $book->category->major }}');
-            @endif
+            {{--@endif--}}
                 switch ($('#categories').val()) {
                 case "Others":
                     $('#major,#year').prop('disabled', true);

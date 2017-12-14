@@ -23,4 +23,5 @@ class Book extends Model
    	public function reservation(){
    	    return $this->hasOne('App\Reservation');
     }
+
 }

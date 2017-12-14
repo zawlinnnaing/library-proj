@@ -36,6 +36,7 @@
                     </tbody>
                 </table>
             </div>
+            {{ $reservations->links() }}
         @endif
     </div>
 @endsection

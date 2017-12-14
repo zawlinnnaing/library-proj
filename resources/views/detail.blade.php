@@ -9,6 +9,7 @@
             Description
         </h1>
         <p>{{ $book->description }}</p>
+
         <div class="aditional-info">
             <h1 class="title">Additional Information
                 <i class="fa fa-info-circle" aria-hidden="true" style="padding: 0.2em 0.5em;"></i>
@@ -66,13 +67,20 @@
                         </td>
                     </tr>
                 @endif
+                <tr>
+                    <td><p>Barcode</p></td>
+                    <td>
+                        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($book->barcode_no,"C39") }}">
+                    </td>
+                </tr>
             </table>
         </div>
-        <div class="reservation card column is-8">
+
+        <div class="reservation card column is-10">
             <h1 class="title">Reservation <i class="fa fa-shopping-cart" aria-hidden="true"
                                              style="padding: 0 0.5em"></i>
             </h1>
-        @if(Auth::check() && !Session::has('msg') and $book->stock_count > 0)
+        @if(Auth::check() && !Session::has('msg') && $book->stock_count > 0)
                 <form class="form" action="{{ route('reserve_book',['id' => $book->id]) }}" method="POST">
                     {{ csrf_field() }}
                     <div class="field">
@@ -86,7 +94,7 @@
                     </div>
                     <input type="submit" name="Submit" value="Reserve" class="button">
                 </form>
-            
+
         @elseif(Session::has('msg'))
             <div class="msg">
                 <h1 class="msg subtitle is-3">{{ Session::get('msg') }}</h1>
@@ -152,6 +160,11 @@
             border: 0px !important;
         }
 
+        .table td img{
+            width: 150px;
+            height: auto;
+        }
+
         .form label {
             padding-right: 1em;
         }
@@ -173,7 +186,7 @@
         .reservation {
             padding: 2em;
             background: #616161;
-            margin: 2em auto 0em !important;
+            margin: 2em 0 !important;
             display: block;
         }
 
