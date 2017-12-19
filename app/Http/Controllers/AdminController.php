@@ -125,7 +125,6 @@ class AdminController extends Controller
         File::delete('profiles/' . $user->img_dir);
         $user->delete();
         Session::flash('success_message', 'User deleted successfully');
-//        return redirect()->action('AdminController@manage_users');
         return redirect()->route('admin.manage_users');
     }
 
@@ -166,7 +165,7 @@ class AdminController extends Controller
 
     public function reservations()
     {
-        $reservations = Reservation::with(['book', 'user'])->orderBy('user_id')->paginate(10);
+        $reservations = Reservation::with(['book', 'user'])->orderBy('user_id')->paginate(15);
         return view('admin.reservations', ['reservations' => $reservations]);
     }
 
@@ -261,14 +260,11 @@ class AdminController extends Controller
             Session::flash('message', 'Book checked out successfully');
         } else {
             Session::flash('message', 'Error(See below for detail)');
-
         }
-//        return redirect()->('admin.issue_book')->(['book' => $book->get() , 'user' => $user->get()]);
         return back()->with(['book' => $book->title, 'user' => $user->name]);
-
     }
 
-    private function bookRules($id)
+    private function bookRules($id = "")
     {
        return ['title'         => 'required|string|max:1000',
                 'author'        => 'required|string|max:500',

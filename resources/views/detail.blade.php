@@ -80,7 +80,7 @@
             <h1 class="title">Reservation <i class="fa fa-shopping-cart" aria-hidden="true"
                                              style="padding: 0 0.5em"></i>
             </h1>
-        @if(Auth::check() && !Session::has('msg') && $book->stock_count > 0)
+            @if(Auth::check() && !Session::has('msg') && $book->stock_count > 0)
                 <form class="form" action="{{ route('reserve_book',['id' => $book->id]) }}" method="POST">
                     {{ csrf_field() }}
                     <div class="field">
@@ -91,21 +91,28 @@
                                         <strong>{{ $errors->first('reserved_time') }}</strong>
                                     </span>
                         @endif
+                        @if(!empty($checkoutTime = \App\GlobalHelper::instantiate()->checkOutTime($book->id)))
+                            <span class="help-block"><strong>You must reserve after {{ $checkoutTime
+                             }} (YYYY-MM-DD)</strong></span>
+                            @php
+                                unset($checkoutTime);
+                            @endphp
+                        @endif
                     </div>
                     <input type="submit" name="Submit" value="Reserve" class="button">
                 </form>
 
-        @elseif(Session::has('msg'))
-            <div class="msg">
-                <h1 class="msg subtitle is-3">{{ Session::get('msg') }}</h1>
-            </div>
-        @else
-            @if($book->stock_count > 0)
-            <h1 class="msg subtitle is-3">* Please log in to reserve book *</h1>
+            @elseif(Session::has('msg'))
+                <div class="msg">
+                    <h1 class="msg subtitle is-3">{{ Session::get('msg') }}</h1>
+                </div>
+            @else
+                @if($book->stock_count > 0)
+                    <h1 class="msg subtitle is-3">* Please log in to reserve book *</h1>
                 @else
-                <h1 class="msg subtitle is-3" style="margin-top: 2em !important;">There is no book left</h1>
+                    <h1 class="msg subtitle is-3" style="margin-top: 2em !important;">There is no book left</h1>
                 @endif
-        @endif
+            @endif
         </div>
     </div>
 @endsection @section('style')
@@ -115,8 +122,8 @@
             background: linear-gradient(rgba(0, 0, 0, .5),
             rgba(0, 0, 0, .5)),
     @if(empty($book->img_dir)) url('{{ asset('uploads/default-book.gif') }}');
-        @else   url('{{ asset("uploads/".$book->img_dir)}}  ');
-            @endif   background-size: cover;
+        @else    url('{{ asset("uploads/".$book->img_dir)}}   ');
+            @endif    background-size: cover;
             background-position-y: center;
             height: 70vh;
             position: relative;
@@ -160,7 +167,7 @@
             border: 0px !important;
         }
 
-        .table td img{
+        .table td img {
             width: 150px;
             height: auto;
         }
@@ -203,8 +210,9 @@
             padding: 2em;
             background-color: #0277BD;
         }
-        span.help-block strong{
-            color: whitesmoke !important;
+
+        span.help-block strong {
+            color: #EF5350 !important;
         }
     </style>
 @endsection
