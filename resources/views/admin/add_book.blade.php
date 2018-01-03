@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2">Summery Number(0-999)</label>
+                    <label class="control-label col-sm-2">Summary Number(0-999)</label>
                     <div class="col-sm-10">
                         <input type="number" name="book_category" min="0" max="1000" class="form-control">
                         @if($errors->has('book_category'))

@@ -14,7 +14,7 @@
         @if($user->checkExpiredDate())
             <p class="message is-danger">Library card has expired !</p>
         @elseif($date_diff
-        < 10 && $date_diff> 0)
+        <= 10 && $date_diff> 0)
             <p class="message is-warning">Library card will expire at {{ ++ $date_diff }} day(s)</p>
         @endif
         <div class="issue_books card">

@@ -12,11 +12,12 @@
  */
 // Page routes
 Route::get('/', 'PageController@index')->name('index');
+Route::get('/#panel')->name('main_page');
 Route::get('/detail/{id}','PageController@detail')->name('detail');
 Route::get('/about',function (){
 	return view('about');
 })->name('about');
-Route::get('/profile','PageController@profile')->name('profile');
+Route::get('/profile','PageController@profile')->name('profile')->middleware('auth');
 Route::get('/categories/{keyword}','PageController@categories')->name('categories');
 Route::get('/archives/{keyword}','PageController@archives')->name('archives');
 Route::get('/archives/advanced_search/{keyword}','SearchController@advancedSearch')->name('archives.advanced_search');

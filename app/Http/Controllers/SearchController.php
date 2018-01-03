@@ -18,9 +18,13 @@ class SearchController extends Controller
     public function userSearch()
     {
         $users = User::where('name', 'LIKE', '%' . Input::get('term') . '%')->take(5)->get();
-        foreach ($users as $value) {
-            $results [] = array('id' => $value->id, 'value' => $value->name);
+        if ($users->count() > 0) {
+            foreach ($users as $value) {
+                $results [] = array('id' => $value->id, 'value' => $value->name);
 
+            }
+        } else {
+            $results [] = array('id' => 0, 'value' => 'No results found');
         }
         return json_encode($results);
     }
@@ -28,10 +32,14 @@ class SearchController extends Controller
     public function bookSearch()
     {
         $books = Book::where('title', 'LIKE', '%' . Input::get('term') . '%')->take(5)->get();
-        foreach ($books as $book) {
-            $results [] = array('id' => $book->id, 'value' => $book->title);
+        if ($books->count() > 0) {
+            foreach ($books as $book) {
+                $results [] = array('id' => $book->id, 'value' => $book->title);
+            }
+        } else {
+            $results [] = array('id' => 0, 'value' => 'No results found');
         }
-        return json_encode($results);
+        return response()->json($results);
     }
 
     public function advancedSearch(Request $request, $keyword)
@@ -65,11 +73,11 @@ class SearchController extends Controller
                 $query->where([
                     ['type', '=', $this->keyword],
                     ['major', '=', $this->major],
-                    ['year', '=',(string)$this->year]
+                    ['year', '=', (string)$this->year]
                 ]);
             })->paginate($itemPerPage);
         }
-            return view('categories', ['books' => $books, 'title' => $keyword]);
+        return view('categories', ['books' => $books, 'title' => $keyword]);
 
     }
 }

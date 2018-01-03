@@ -38,7 +38,7 @@ class User extends Authenticatable
     }
 
     public function checkExpiredDate(){
-        if (Auth::check() &&  Auth::user()->expired_date <= date('Y-m-d')){
+        if (Auth::check() &&  Auth::user()->expired_date <= date('Y-m-d') && Auth::user()->expired_date != null){
             $noticount = Auth::user()->noti_count;
             $noticount ++;
             Auth::user()->update(['noti_count' => $noticount]);

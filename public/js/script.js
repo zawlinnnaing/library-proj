@@ -26,42 +26,47 @@ $("a.is-danger").on("click", function (e) {
 // AutoComplete search
 $('#q')
     .autocomplete({
-    source: '/user_search',
-    select: function (event, ui) {
-        // window.location.href = "/admin/edit_user/" + ui.item.id;
-        userResult(ui);
-    },
-        close: function (event,ui) {
-        if(!ui.item){
-            $(".ui-menu-item").hide();
-        }
+        source: '/user_search',
+        select: function (event, ui) {
+            if (ui.item.id === 0) {
+                return false;
+            }
+            userResult(ui);
+        },
+        close: function (event, ui) {
+            if (!ui.item) {
+                $(".ui-menu-item").hide();
+            }
         }
     });
 
 $('.book').autocomplete({
     source: '/book_search',
     minLength: 3,
-    select: function (event ,ui) {
+    select: function (event, ui) {
+        if (ui.item.id === 0) {
+            return false;
+        }
         bookResult(ui);
     },
-    close: function (event,ui) {
-        if(!ui.item){
+    close: function (event, ui) {
+        if (!ui.item) {
             $(".ui-menu-item").hide();
         }
     }
 });
 
-        $('#explore-icon').click(function (e) {
-            e.preventDefault();
-            $('body').css('overflow','scroll');
-            // body...
-            $('body').animate({
-                scrollTop: $($(this).attr('href')).offset().top
-            },500,function(){
-                $('.welcome').hide();
-            });
-            return false;
-        });
+$('#explore-icon').click(function (e) {
+    e.preventDefault();
+    $('body').css('overflow', 'scroll');
+    // body...
+    $('body').animate({
+        scrollTop: $($(this).attr('href')).offset().top
+    }, 500, function () {
+        $('.welcome').hide();
+    });
+    return false;
+});
 
 
 
