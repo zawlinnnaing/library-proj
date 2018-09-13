@@ -22,7 +22,10 @@ Route::get('/categories/{keyword}','PageController@categories')->name('categorie
 Route::get('/archives/{keyword}','PageController@archives')->name('archives');
 Route::get('/archives/advanced_search/{keyword}','SearchController@advancedSearch')->name('archives.advanced_search');
 Route::post('/reserve_book/{id}','PageController@reserveBook')->name('reserve_book');
-
+Route::get('/change_password',function (){
+    return view('change_password');
+})->name('view_change_password');
+Route::post('/action_change_password','PageController@changePassword')->name('change_password');
 Auth::routes();
 
 Route::get('/home', 'PageController@index')->name('home');

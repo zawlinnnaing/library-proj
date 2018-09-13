@@ -69,7 +69,7 @@
                       <tr>
                         <td width="5%"><i class="fa fa-book"></i></td>
                         <td>{{ $book->title }}</td>
-                        <td><a class="button is-small is-primary" href="/admin/edit_book/{{$book->id}}">Edit</a></td>
+                        <td><a class="button is-small is-primary" href="{{ route('admin.edit_book' ,['id' => $book->id ]) }}">Edit</a></td>
                       </tr>
                       @endforeach
                       

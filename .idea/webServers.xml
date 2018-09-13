@@ -2,8 +2,13 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="2c4f8de6-f791-4ef0-b2ec-698768713d84" name="XAMPP SERVER" url="http://localhost">
-        <fileTransfer port="0" mountedRoot="$PROJECT_DIR$/.." accessType="MOUNT" />
+      <webServer id="0285b8a1-3298-4f8d-9e6d-6c89880b8565" name="Library project remote server" url="https://etfirstwebsite.000webhostapp.com/">
+        <fileTransfer host="files.000webhost.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
       </webServer>
     </option>
   </component>

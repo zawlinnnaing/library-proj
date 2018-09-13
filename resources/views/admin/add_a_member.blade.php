@@ -27,7 +27,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('stud_id') ? ' has-error' : '' }}">
                                 <label for="name" class="col-md-4 control-label">Student ID</label>
 
                                 <div class="col-md-6">
@@ -76,7 +76,7 @@
                                 <label for="roll_no" class="col-md-4 control-label">Roll No</label>
 
                                 <div class="col-md-6">
-                                    <input id="roll_no" type="text" class="form-control" name="roll_no" required>
+                                    <input id="roll_no" type="text" class="form-control" name="roll_no" value="{{ old('roll_no') }}" required>
 
                                     @if ($errors->has('roll_no'))
                                         <span class="help-block">
@@ -93,6 +93,21 @@
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
                                            name="password_confirmation" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('expired_date') ? ' has-error' : '' }}">
+                                <label for="expired_date" class="col-md-4 control-label">Expired Date</label>
+
+                                <div class="col-md-6">
+                                    <input id="expired_date" type="date" class="form-control" name="expired_date"
+                                           value="{{ old('expired_date') }}" required>
+
+                                    @if ($errors->has('expired_date'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('expired_date') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
                             </div>
 

@@ -92,6 +92,7 @@
         </div>
     </div>
 </div>
+{{--et was here--}}
 <div class="container">
     <div class="staff-info">
         <h1 class="title" style="text-align: center;">Staff Info</h1>

@@ -6,6 +6,7 @@ use App\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use Validator;
 
 class PageController extends Controller
 {
@@ -116,6 +117,18 @@ class PageController extends Controller
         } else {
             Session::flash('msg', 'Error occured');
         }
+        return redirect()->back();
+    }
+
+    public function changePassword(Request $request)
+    {
+        Validator::make($request->all(), [
+            'old_password' => 'required|old_password:' . Auth::user()->password,
+            'password'     => 'required|string|min:6|confirmed',
+        ], ['old_password' => 'old password has to match'])->validate();
+        $new_password = bcrypt($request->password);
+        $request->user()->update(['password' => $new_password]);
+        Session::flash('success_message', 'Password changed successfully');
         return redirect()->back();
     }
 
